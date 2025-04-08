@@ -11,7 +11,7 @@
       id="images"
       type="file"
       class="hidden"
-      accept="image/png, image/jpeg"
+      accept="image/png, image/jpeg, image/webp"
       multiple
       @input="form.images = $event.target.files"
       @change="submit"

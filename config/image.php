@@ -24,7 +24,7 @@ return [
     ],
 
     'encode' => [
-        'formats' => ['webp'],
+        'formats' => ['webp', 'jpg', 'png'],
         'quality' => 85
     ],
 

@@ -12,7 +12,8 @@ class ImageService extends FileService
 {
     public static function storeImage(UploadedFile $image, int $imageId, Folder $folder): string
     {
-        $imagePath = $image->storeAs($folder->path(), $imageId . '.' . $image->extension());
+        $clientFileName = $image->getClientOriginalName();
+        $imagePath = $image->storeAs($folder->path(), $clientFileName);
 
         foreach (config('image.sizes') as $sizeName => $size) {
             Image::make(Storage::path($imagePath))
@@ -20,11 +21,8 @@ class ImageService extends FileService
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 })
-                ->save(Storage::path("$sizeName-$imageId"));
-            Storage::move(
-                "$sizeName-$imageId",
-                "$sizeName/$imagePath"
-            );
+                ->save(Storage::path("$sizeName-$clientFileName"));
+            Storage::move("$sizeName-$clientFileName", "$sizeName/$imagePath");
         }
 
         return $imagePath;

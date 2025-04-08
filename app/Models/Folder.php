@@ -41,7 +41,7 @@ class Folder extends Model
     // Custom
     public function isEmpty(): bool
     {
-        return (! $this->hasChildFolder()) && (! $this->hasImage());
+        return (!$this->hasChildFolder()) && (!$this->hasImage());
     }
 
     public function hasChildFolder(): bool
@@ -56,6 +56,6 @@ class Folder extends Model
 
     public function path(): string
     {
-        return $this->user_id . '/' . $this->id;
+        return $this->parent ? $this->parent->path() . '/' . $this->name : $this->name;
     }
 }
